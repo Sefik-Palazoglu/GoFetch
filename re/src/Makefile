@@ -9,7 +9,6 @@ SUBDIRS=$(BASIC_DIR) $(EVSET_DIR)
 BUILD_SUBDIRS=$(SUBDIRS:%=build-%)
 CLEAN_SUBDIRS=$(SUBDIRS:%=clean-%)
 
-OBJECTS=$(foreach D, $(SUBDIRS), $(wildcard $(D)/*.o))
 EXECS=$(wildcard ./*.out)
 ASMS=$(wildcard ./*.s)
 LDFLAGS=-lm
@@ -30,7 +29,7 @@ l2l1: l2l1_fetch.out
 quick: quick_check.out
 
 %.out: %.o $(BUILD_SUBDIRS)
-	$(CC) $(LDFLAGS) -o $@ $< $(OBJECTS)
+	$(CC) $(LDFLAGS) -o $@ $< $(foreach D, $(BUILD_SUBDIRS:build-%=%), $(wildcard $(D)/*.o))
 
 %.o: %.c
 	$(CC) $(CFLAGS) $^ -c -o $@
@@ -39,7 +38,7 @@ $(BUILD_SUBDIRS):
 	$(MAKE) -C $(@:build-%=%)
 
 clean: $(CLEAN_SUBDIRS)
-	rm -rf $(OBJECTS) $(EXECS) $(ASMS)
+	rm -rf $(EXECS) $(ASMS)
 
 $(CLEAN_SUBDIRS):
 	$(MAKE) clean -C $(@:clean-%=%)

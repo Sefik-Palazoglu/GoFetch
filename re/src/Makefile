@@ -9,12 +9,10 @@ SUBDIRS=$(BASIC_DIR) $(EVSET_DIR)
 BUILD_SUBDIRS=$(SUBDIRS:%=build-%)
 CLEAN_SUBDIRS=$(SUBDIRS:%=clean-%)
 
-OBJECTS=$(shell find ./lib -name '*.o')
-EXECS=$(shell find . -name '*.out')
-ASMS=$(shell find . -name '*.s')
+OBJECTS=$(foreach D, $(SUBDIRS), $(wildcard $(D)/*.o))
+EXECS=$(foreach D, ., $(wildcard $(D)/*.out))
+ASMS=$(foreach D, ., $(wildcard $(D)/*.s))
 LDFLAGS=-lm
-
-# $(error   OBJECTS is $(OBJECTS))
 
 all: evset_gen.out no_deref.out aop_stream.out \
 	addr_sweep.out l2l1_fetch.out quick_check.out

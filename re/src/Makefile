@@ -9,6 +9,7 @@ SUBDIRS=$(BASIC_DIR) $(EVSET_DIR)
 BUILD_SUBDIRS=$(SUBDIRS:%=build-%)
 CLEAN_SUBDIRS=$(SUBDIRS:%=clean-%)
 
+OBJECTS=$(wildcard ./*.o)
 EXECS=$(wildcard ./*.out)
 ASMS=$(wildcard ./*.s)
 LDFLAGS=-lm
@@ -38,7 +39,7 @@ $(BUILD_SUBDIRS):
 	$(MAKE) -C $(@:build-%=%)
 
 clean: $(CLEAN_SUBDIRS)
-	rm -rf $(EXECS) $(ASMS)
+	rm -rf $(OBJECTS) $(EXECS) $(ASMS)
 
 $(CLEAN_SUBDIRS):
 	$(MAKE) clean -C $(@:clean-%=%)

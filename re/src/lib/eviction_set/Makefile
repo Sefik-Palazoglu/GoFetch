@@ -1,6 +1,6 @@
 CC=clang
 
-SOURCES=$(foreach D, ., $(wildcard $(D)/*.c))
+SOURCES=$(wildcard ./*.c)
 OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
 
 CFLAGS=-O2 -g -Wall -fPIC

@@ -1,10 +1,9 @@
 CC=clang
 
-SOURCES=$(shell find . -name '*.c')
-OBJECTS=$(SOURCES:.c=.o)
+SOURCES=$(foreach D, ., $(wildcard $(D)/*.c))
+OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
 
 CFLAGS=-O2 -g -Wall -fPIC
-
 
 all: $(OBJECTS)
 

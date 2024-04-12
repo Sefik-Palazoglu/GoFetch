@@ -1,9 +1,12 @@
 CC=clang
 
 SOURCES=$(wildcard ./*.c)
+INCDIRS=.
 OBJECTS=$(patsubst %.c, %.o, $(SOURCES))
+DEPFILES=$(patsubst %.c, %.d, $(SOURCES))
 
-CFLAGS=-O2 -Wall -fPIC -g
+DEPFLAGS=-MP -MD
+CFLAGS=-O2 -Wall -fPIC -g $(foreach D,$(INCDIRS),-I$(D)) $(DEPFLAGS)
 LDFLAGS=-lm
 
 all: $(OBJECTS)
@@ -12,4 +15,6 @@ all: $(OBJECTS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJECTS)
+	rm -rf $(OBJECTS) $(DEPFILES)
+
+-include $(DEPFILES)

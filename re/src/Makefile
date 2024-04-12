@@ -10,8 +10,8 @@ BUILD_SUBDIRS=$(SUBDIRS:%=build-%)
 CLEAN_SUBDIRS=$(SUBDIRS:%=clean-%)
 
 OBJECTS=$(foreach D, $(SUBDIRS), $(wildcard $(D)/*.o))
-EXECS=$(foreach D, ., $(wildcard $(D)/*.out))
-ASMS=$(foreach D, ., $(wildcard $(D)/*.s))
+EXECS=$(wildcard ./*.out)
+ASMS=$(wildcard ./*.s)
 LDFLAGS=-lm
 
 all: evset_gen.out no_deref.out aop_stream.out \

@@ -56,7 +56,7 @@ uint64_t datastream_array(uint64_t* victim_addr, \
 uint64_t aopstream_array(uint64_t* aop_addr, \
     int num_of_train_pointers, uint64_t trash) {
 
-    volatile uint64_t **aop = (uint64_t**)aop_addr;
+    volatile uint64_t **aop = (volatile uint64_t**)aop_addr;
 
     // Training loop
     for (int j = 0; j < num_of_train_pointers; j++) {
